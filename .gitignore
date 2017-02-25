@@ -1,15 +1,14 @@
-# Ignore Play! working directory #
-bin/
-/db
-.eclipse
-/lib/
 /logs/
-/modules
+/target/
+/.classpath
+/.project
+/.settings
+/.history
+/RUNNING_PID
+/bin/
 /project/target
-/target
-tmp/
-test-result
-server.pid
-*.eml
-/dist/
-.cache
+/project/project
+/tmp/
+/mongodb/log
+/mongodb/data
+/.cache-main
