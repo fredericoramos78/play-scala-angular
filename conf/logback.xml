@@ -1,0 +1,52 @@
+<configuration>
+
+    <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${application.home:-.}/logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover with compression -->
+            <fileNamePattern>${application.home:-.}/logs/application-log-%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date - [%level] - from %logger at %class{0} in %thread %n%message%n%xException%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+    </appender>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>%date{HH:mm:ss} [%thread] %coloredLevel %cyan(%logger{0}) - %message%n%xException</pattern>
+        </encoder>
+    </appender>
+    <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT" />
+    </appender>
+    
+    <logger name="play" level="INFO" />
+    <logger name="application" level="INFO" />
+    <logger name="akka" level="DEBUG" />
+    
+    <logger name="controllers" level="DEBUG"/>
+    <logger name="jobs" level="DEBUG"/>
+    <logger name="modules" level="DEBUG"/>
+    <logger name="business" level="DEBUG"/>
+    
+    <logger name="org.jdbcdslog.ConnectionLogger" level="OFF"/>
+    <logger name="org.jdbcdslog.ResultSetLogger" level="OFF"/>
+    <logger name="org.jdbcdslog.StatementLogger" level="DEBUG"/>
+    <logger name="org.jdbcdslog.SlowQueryLogger" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="ASYNCFILE" />
+        <appender-ref ref="ASYNCSTDOUT" />
+    </root>
+
+</configuration>

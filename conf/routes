@@ -1,0 +1,29 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+#GET     /                                    controllers.IndexController.websiteIndex
+GET     /jsroutes.js                          controllers.IndexController.jsRoutes()
+
+GET     /                                     controllers.IndexController.index
+#GET     /views/home/landing.html             controllers.IndexController.homeLanding
+#GET     /views/customers/listing.html        controllers.IndexController.customerListing
+
+POST    /api/auth/login                       controllers.rest.auth.AuthentationController.login
+POST    /api/auth/logout                      controllers.rest.auth.AuthentationController.logout
+
+POST    /api/customers/list.json              controllers.rest.catalog.CustomerController.list
+POST    /api/customers/new.json               controllers.rest.catalog.CustomerController.newCustomer
+POST    /api/customers/edit.json              controllers.rest.catalog.CustomerController.editCustomer
+POST   /api/customers/:id/load.json           controllers.rest.catalog.CustomerController.loadCustomer(id: String)
+
+GET     /views/$template<.+>.html             controllers.IndexController.displayView(template)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                         controllers.Assets.versioned(path="/public", file: Asset)
+GET     /webjars/*file                        controllers.WebJarAssets.at(file)
+
+
+
+GET     /*path                                controllers.IndexController.start(path)
