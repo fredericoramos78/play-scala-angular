@@ -30,7 +30,7 @@ class MongoCustomerRepository @Inject() (ec: ExecutionContexts, mongoHelper: Mon
     
     lazy val SORT_BY = Sorts.descending("name")
     
-    final val COLLECTION_NAME: String = "CustomerCollection"
+    final val COLLECTION_NAME: String = "_customers"
     lazy val db: MongoDatabase = mongoHelper.mongoDB
     
     

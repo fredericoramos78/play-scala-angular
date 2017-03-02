@@ -2,11 +2,14 @@ package controllers.rest.auth
 
 
 import javax.inject._
+
 import scala.concurrent.Future
+
 import play.api.mvc._
-import play.api.libs.json.Json
+import play.api.libs.json._
 import play.api.i18n._
 import play.api.Configuration
+
 import akka.actor.ActorSystem
 
 import jsmessages.JsMessagesFactory
@@ -19,8 +22,9 @@ import controllers._
 
 
 class AuthentationController @Inject() (webJarAssets: WebJarAssets, requireJS: RequireJS, val messagesApi: MessagesApi, 
-                                    jsMessagesFactory: JsMessagesFactory, authService: AuthenticationService, 
-                                    configuration: Configuration, system: ActorSystem, ec: ExecutionContexts) 
+                                    jsMessagesFactory: JsMessagesFactory, authCheker: SecuredChecker[JsValue],
+                                    authService: AuthenticationService, configuration: Configuration, 
+                                    system: ActorSystem, ec: ExecutionContexts) 
     extends AsyncEnabled(ec) with Controller with I18nSupport { 
   
     implicit val threadpool = ec.services
@@ -40,9 +44,8 @@ class AuthentationController @Inject() (webJarAssets: WebJarAssets, requireJS: R
         } recoverTotal { case error => Future.successful(BadRequest(error.toString())) }
     } }
     
-    def logout = SimpleAction(configuration, system) { Action.async(parse.json) { request =>
-        
-        request.headers.get(SecuredAction.USER_KEY) map { userEmail =>
+    def logout = SecuredAction(configuration, system, authCheker) { Action.async(parse.json) { request =>
+        authCheker.getUserIdent(request) map { userEmail =>
             authService.disconect(userEmail) map { sessionCount =>
                 Ok( Json.obj("sessions" -> sessionCount))
             } recover { 

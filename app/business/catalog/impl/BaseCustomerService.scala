@@ -11,7 +11,7 @@ import business.catalog._
 import business.BusinessException
 import utils._
 
-class BaseCustomerServiceImpl @Inject() (repository: CustomerRepository, ec: ExecutionContexts, messagesApi: MessagesApi) extends AsyncEnabled(ec) with CustomerService {
+class BaseCustomerService @Inject() (repository: CustomerRepository, ec: ExecutionContexts, messagesApi: MessagesApi) extends AsyncEnabled(ec) with CustomerService {
 
     implicit val threadpool = ec.repos
     
