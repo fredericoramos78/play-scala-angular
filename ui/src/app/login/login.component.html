@@ -1,0 +1,25 @@
+<h2>
+    You are at the login page.
+</h2>
+<div>
+    <form #loginForm="ngForm">
+        <div>
+            <label>Login:</label>
+            <input type="email" name="username" id="username"
+                   required minlength="4"
+                   [(ngModel)]="username">
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" id="password"
+                   required minlength="6"
+                   [(ngModel)]="password">
+        </div>
+        <div>
+            <a href="#">limpar</a>
+            <input type="submit" value="entrar"
+                   [disabled]="!loginForm.valid || loginForm.prestine"
+                   (click)="onLogin()">
+        </div>
+    </form>
+</div>

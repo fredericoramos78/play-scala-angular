@@ -16,30 +16,40 @@ scalaVersion := "2.11.8"
 
 // Scala Compiler Options
 scalacOptions in ThisBuild ++= Seq(
-  "-target:jvm-1.8",
-  "-encoding", "UTF-8",
-  "-deprecation", // warning and location for usages of deprecated APIs
-  "-feature", // warning and location for usages of features that should be imported explicitly
-  "-unchecked", // additional warnings where generated code depends on assumptions
-  "-Xlint", // recommended additional warnings
-  "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
-  "-Ywarn-value-discard", // Warn when non-Unit expression results are unused
-  "-Ywarn-inaccessible",
-  "-Ywarn-dead-code"
+    "-target:jvm-1.8",
+    "-encoding", "UTF-8",
+    "-deprecation", // warning and location for usages of deprecated APIs
+    "-feature", // warning and location for usages of features that should be imported explicitly
+    "-unchecked", // additional warnings where generated code depends on assumptions
+    "-Xlint", // recommended additional warnings
+    "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
+    "-Ywarn-value-discard", // Warn when non-Unit expression results are unused
+    "-Ywarn-inaccessible",
+    "-Ywarn-dead-code"
 )
 
 
 libraryDependencies ++= Seq(
-  jdbc,
-  cacheApi,
-  ws,
-  filters,
-  guice,
-  "com.typesafe.play" %% "play-json" % "2.6.+",
-  // persistence technologies  
-  "org.mongodb.scala" %% "mongo-scala-driver" % "1.+",
-  // testing
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.+" % Test
+    jdbc,
+    cacheApi,
+    ws,
+    filters,
+    guice,
+    "com.typesafe.play" %% "play-json" % "2.6.+",
+    "net.codingwell" %% "scala-guice" % "4.+",
+    // silhouette
+    "com.iheart" %% "ficus" % "1.4+",
+    "com.atlassian.jwt" % "jwt-api" % "1.6.1" % "provided",
+    "com.atlassian.jwt" % "jwt-core" % "1.6.1" % "provided",
+    "com.mohiva" %% "play-silhouette" % "5.0.0",
+    "com.mohiva" %% "play-silhouette-password-bcrypt" % "5.0.0",
+    "com.mohiva" %% "play-silhouette-crypto-jca" % "5.0.0",
+    "com.mohiva" %% "play-silhouette-persistence" % "5.0.0",
+    "com.mohiva" %% "play-silhouette-testkit" % "5.0.0" % Test,
+    // persistence technologies
+    "org.mongodb.scala" %% "mongo-scala-driver" % "1.+",
+    // testing
+    "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.+" % Test
 )
 
 //
@@ -48,12 +58,10 @@ libraryDependencies ++= Seq(
 resolvers := (Resolver.mavenLocal) +:
              // Required by specs2 to get scalaz-stream
              ("scalaz-bintray" at "http://dl.bintray.com/scalaz/releases") +:
-			 ("Nexus Releases Repository" at "https://oss.sonatype.org/content/repositories/releases") +:
+             ("Nexus Releases Repository" at "https://oss.sonatype.org/content/repositories/releases") +:
+             ("Atlassian Repository" at "https://maven.atlassian.com/repository/public") +:
              resolvers.value
 
-			 
-			 
-			 
 fork in run := true
 
 //

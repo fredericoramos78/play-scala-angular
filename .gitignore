@@ -12,3 +12,4 @@
 /mongodb/log
 /mongodb/data
 /.cache-main
+.idea/

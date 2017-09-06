@@ -9,6 +9,9 @@ GET     /                           controllers.Assets.versioned(file = "ui/inde
 # all controllers APIs should be placed here. Consider using some prefix to identify then, like '/api' ou '/service'
 #
 
+GET    /api/version.json            controllers.API.version()
+POST   /api/auth/login.json         controllers.auth.JWTLogin.login()
+GET    /api/auth/logout.json        controllers.auth.JWTLogin.logout()
 
 
 
@@ -16,3 +19,4 @@ GET     /                           controllers.Assets.versioned(file = "ui/inde
 
 # map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(file)
+GET     /*path                      controllers.Index.catchAll(path)

@@ -1,7 +1,18 @@
 import { Component } from '@angular/core';
 
+import { AuthService } from './auth/auth.service'
+
 @Component({
   selector: 'my-app',
-  template: `<h1>Hello {{name}}</h1>`,
+  templateUrl: 'app.component.html'
 })
-export class AppComponent  { name = 'Angular'; }
+export class AppComponent {
+
+    constructor(private auth: AuthService) {}
+
+    name = 'Angular';
+
+    getUserHash(): String {
+        return this.auth.loadToken();
+    }
+}
